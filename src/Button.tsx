@@ -1,10 +1,13 @@
+import { Volt } from "./useRelay/Observable";
 import { useRelay } from "./useRelay/useRelay";
 
+const countVolt = new Volt(1);
+
 const Button = (props: { id: string }) => {
-  const [count, setCount] = useRelay(0);
+  const [count, setCount] = useRelay(countVolt);
 
   const onClick = () => {
-    setCount(count + 1);
+    setCount(count * 2);
   };
 
   console.log("render button : ", props.id);

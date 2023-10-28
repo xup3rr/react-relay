@@ -1,10 +1,17 @@
 import Button from "./Button";
+import Toogle from "./Toogle";
 
 function App() {
   return (
     <>
-      <Button id={"1"} />
-      <Button id={"2"} />
+      <div>
+        <Button id={"1"} />
+        <Button id={"2"} />
+      </div>
+      <div>
+        <Toogle id={"1"} />
+        <Toogle id={"2"} />
+      </div>
     </>
   );
 }
