@@ -7,7 +7,7 @@ const Button = (props: { id: string }) => {
   const [count, setCount] = useRelay(countVolt);
 
   const onClick = () => {
-    setCount(count * 2);
+    setCount((prev) => prev * 2);
   };
 
   console.log("render button : ", props.id);
