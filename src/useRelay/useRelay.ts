@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Observable } from "./Observable";
+import { Volt } from "./Observable";
 
-export const useRelay = <T>(
-  initialState: T extends (...args: any[]) => any ? never : T
-): [T, (arg: T) => void] => {
-  const [state, _setState] = useState<T>(initialState);
+export const useRelay = <T>(volt: Volt<T>): [T, (arg: T) => void] => {
+  const [state, _setState] = useState<T>(volt.initialData);
 
-  Observable.subscribe(_setState);
+  volt.subscribe(_setState);
 
   const setState = (newState: T) => {
-    Observable.notify(newState);
+    volt.notify(newState);
   };
 
   return [state, setState];

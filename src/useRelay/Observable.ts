@@ -1,23 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-type Observer = (arg: any) => void;
-
-const observers: Array<Observer> = [];
-
-export const Observable = Object.freeze({
-  subscribe: (observer: Observer) => observers.push(observer),
-  notify: (data: any) => observers.forEach((observer) => observer(data)),
-});
-
 //TODO: add unsubscribe to remove from observers. keep track by instance or some id
 
-// export class Volt {
-//   subscribe: (observer: Observer) => number;
-//   notify: (data: any) => void;
+type Observer<T> = (arg: T) => void;
 
-//   constructor() {
-//     this.subscribe = (observer: Observer) => observers.push(observer);
-//     this.notify = (data: any) =>
-//       observers.forEach((observer) => observer(data));
-//   }
-// }
+export class Volt<T> {
+  initialData: T;
+  observers: Array<Observer<T>> = [];
+  subscribe: (observer: Observer<T>) => number;
+  notify: (data: T) => void;
+
+  constructor(initialData: T extends (...args: any[]) => any ? never : T) {
+    this.initialData = initialData;
+    this.subscribe = (observer: Observer<T>) => this.observers.push(observer);
+    this.notify = (data: T) =>
+      this.observers.forEach((observer) => observer(data));
+  }
+}
