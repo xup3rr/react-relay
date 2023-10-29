@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Volt } from "./Observable";
 
 export const useRelay = <T>(
@@ -6,7 +6,9 @@ export const useRelay = <T>(
 ): [T, (arg: T | ((prevState: T) => T)) => void] => {
   const [state, _setState] = useState<T>(volt.initialData);
 
-  volt.subscribe(_setState);
+  useEffect(() => {
+    volt.subscribe(_setState);
+  }, [volt]);
 
   const setState = (newState: T | ((prevState: T) => T)) => {
     if (newState instanceof Function) {
